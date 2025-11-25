@@ -1,7 +1,7 @@
 package adif
 
 import (
-	"github.com/7Q-Station-Manager/types"
+	"github.com/Station-Manager/types"
 	"strings"
 	"testing"
 )

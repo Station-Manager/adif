@@ -9,11 +9,7 @@ const (
 	DashStr       = "-"
 	ColonStr      = ":"
 	Version       = "3.1.5"
-	//	ChevronRight  = ">"
-	//	ChevronLeft   = "<"
-	//	ReturnStr     = "\r"
-	NewLineStr = "\n"
-	//	CommentStr    = "#"
+	NewLineStr    = "\n"
 )
 
 const (

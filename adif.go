@@ -1,8 +1,8 @@
 package adif
 
 import (
-	"github.com/7Q-Station-Manager/errors"
-	"github.com/7Q-Station-Manager/types"
+	"github.com/Station-Manager/errors"
+	"github.com/Station-Manager/types"
 )
 
 // Record represents a single ADIF (Amateur Data Interchange Format) record.
@@ -61,26 +61,26 @@ func QsoToRecord(q types.Qso) Record {
 	r.LoggingStation = q.LoggingStation
 	// Map QSL
 	r.QslSection = QslSection{
-		QslMsg:                  q.Qsl.QslMsg,
-		QslMsgIntl:              q.Qsl.QslMsgRcvd, // confirm your desired mapping here
-		QslRDate:                q.Qsl.QslRDate,
-		QslSDate:                q.Qsl.QslSDate,
-		QslRcvd:                 q.Qsl.QslRcvd,
-		QslSent:                 q.Qsl.QslSent,
-		QslSentVia:              q.Qsl.QslSendVia,
-		QslVia:                  q.Qsl.QslVia,
-		QrzcomQsoDownloadDate:   q.Misc.QrzcomQsoDownloadDate,
-		QrzcomQsoDownloadStatus: q.Misc.QrzcomQsoDownloadStatus,
-		QrzcomQsoUploadDate:     q.Misc.QrzcomQsoUploadDate,
-		QrzcomQsoUploadStatus:   q.Misc.QrzcomQsoUploadStatus,
+		QslMsg:     q.Qsl.QslMsg,
+		QslMsgIntl: q.Qsl.QslMsgRcvd, // confirm your desired mapping here
+		QslRDate:   q.Qsl.QslRDate,
+		QslSDate:   q.Qsl.QslSDate,
+		QslRcvd:    q.Qsl.QslRcvd,
+		QslSent:    q.Qsl.QslSent,
+		QslSentVia: q.Qsl.QslSendVia,
+		QslVia:     q.Qsl.QslVia,
+		//QrzcomQsoDownloadDate:   q.Misc.QrzcomQsoDownloadDate,
+		//QrzcomQsoDownloadStatus: q.Misc.QrzcomQsoDownloadStatus,
+		//QrzcomQsoUploadDate:     q.Misc.QrzcomQsoUploadDate,
+		//QrzcomQsoUploadStatus:   q.Misc.QrzcomQsoUploadStatus,
 	}
 	// Map user-defined fields
 	r.UserDef = UserDef{
-		SmQsoUploadDate:     q.Misc.SmQsoUploadDate,
-		SmQsoUploadStatus:   q.Misc.SmQsoUploadStatus,
-		SmFwrdByEmailDate:   q.Misc.SmFwrdByEmailDate,
-		SmFwrdByEmailStatus: q.Misc.SmFwrdByEmailStatus,
-		QslWanted:           q.Misc.QslWanted,
+		SmQsoUploadDate:     q.SmQsoUploadDate,
+		SmQsoUploadStatus:   q.SmQsoUploadStatus,
+		SmFwrdByEmailDate:   q.SmFwrdByEmailDate,
+		SmFwrdByEmailStatus: q.SmFwrdByEmailStatus,
+		//		QslWanted:           q.Misc.QslWanted,
 	}
 	return r
 }
@@ -93,7 +93,7 @@ func ConvertQsoToAdifNoHeader(q types.Qso) (string, error) {
 func ComposeToAdifString(slice types.QsoSlice) (string, error) {
 	const op errors.Op = "adif.ComposeToAdifString"
 	if len(slice) == 0 {
-		return emptyString, errors.New(op).WithErrorf("QSO slice is empty")
+		return emptyString, errors.New(op).Msg("QSO slice is empty")
 	}
 	recs := make([]Record, 0, len(slice))
 	for _, q := range slice {

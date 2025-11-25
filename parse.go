@@ -2,7 +2,7 @@ package adif
 
 import (
 	"bytes"
-	"github.com/7Q-Station-Manager/errors"
+	"github.com/Station-Manager/errors"
 	"reflect"
 	"regexp"
 	"strconv"
