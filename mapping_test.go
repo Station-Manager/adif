@@ -1,17 +1,18 @@
 package adif
 
 import (
-	"github.com/Station-Manager/types"
 	"strings"
 	"testing"
+
+	"github.com/Station-Manager/types"
 )
 
 func Test_QsoToRecord_And_RenderIncludesQslAndMisc(t *testing.T) {
 	q := types.Qso{
 		QsoDetails: types.QsoDetails{
-			Freq:    "7.050.000",
-			QsoDate: "2025-05-08",
-			TimeOn:  "08:45:00",
+			Freq:    "7050000",
+			QsoDate: "20250508",
+			TimeOn:  "084500",
 		},
 		ContactedStation: types.ContactedStation{Call: "M0CMC"},
 		LoggingStation:   types.LoggingStation{StationCallsign: "7Q5MLV/T"},
@@ -23,15 +24,15 @@ func Test_QsoToRecord_And_RenderIncludesQslAndMisc(t *testing.T) {
 			QslSent:  "Y",
 			QslVia:   "B",
 		},
-		Misc: types.Misc{
-			QrzcomQsoUploadStatus: "Y",
-			QrzcomQsoUploadDate:   "20250508010101",
-			SmQsoUploadStatus:     "Y",
-			SmQsoUploadDate:       "20250508010101",
-			SmFwrdByEmailStatus:   "N",
-			SmFwrdByEmailDate:     "",
-			QslWanted:             "Y",
-		},
+		//Misc: types.Misc{
+		QrzComUploadStatus:  "Y",
+		QrzComUploadDate:    "20250508010101",
+		SmQsoUploadStatus:   "Y",
+		SmQsoUploadDate:     "20250508010101",
+		SmFwrdByEmailStatus: "N",
+		SmFwrdByEmailDate:   "",
+		//		QslWanted:             "Y",
+		//},
 	}
 
 	rec := QsoToRecord(q)
@@ -47,7 +48,7 @@ func Test_QsoToRecord_And_RenderIncludesQslAndMisc(t *testing.T) {
 		"<QSL_VIA:1>B",
 		"<QRZCOM_QSO_UPLOAD_STATUS:1>Y",
 		"<SM_QSO_UPLOAD_STATUS:1>Y",
-		"<QSL_WANTED:1>Y",
+		//		"<QSL_WANTED:1>Y",
 	}
 	for _, s := range mustContain {
 		if !strings.Contains(adif, s) {

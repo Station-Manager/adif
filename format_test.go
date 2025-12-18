@@ -17,3 +17,20 @@ func Test_normalizeFreqMHz(t *testing.T) {
 		}
 	}
 }
+
+func Test_khzToMHz(t *testing.T) {
+	cases := map[string]string{
+		"14310000":  "14.310",
+		"7050000":   "7.050",
+		"14439000":  "14.439",
+		"123456":    "123456",    // Too short
+		"123456789": "123456789", // Too long
+		"abcdefgh":  "abcdefgh",  // Not a number
+	}
+	for in, want := range cases {
+		got := khzToMHz(in)
+		if got != want {
+			t.Fatalf("khzToMHz(%q) = %q; want %q", in, got, want)
+		}
+	}
+}

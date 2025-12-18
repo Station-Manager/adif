@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"fmt"
 	"reflect"
+	"strconv"
 	"strings"
 	"time"
 )
@@ -109,7 +110,8 @@ func formatField(tagName string, value string) string {
 	// Special formatting required for certain fields by the ADIF standard.
 	switch tagName {
 	case "FREQ", "FREQ_RX":
-		value = normalizeFreqMHz(value)
+		//		value = normalizeFreqMHz(value)
+		value = khzToMHz(value)
 	case "QSO_DATE", "QSO_DATE_OFF", "QSLRDATE", "QSLSDATE":
 		value = strings.ReplaceAll(value, DashStr, emptyString)
 	case "TIME_ON", "TIME_OFF":
@@ -140,5 +142,21 @@ func normalizeFreqMHz(s string) string {
 	}
 	// Remove any trailing dot, e.g., "144." -> "144"
 	s = strings.TrimSuffix(s, ".")
+
 	return s
+}
+
+// khzToMHz converts a frequency string of 7 or 8 characters (representing kHz) to MHz.
+// Example: "14310000" -> "14.310"
+func khzToMHz(s string) string {
+	if len(s) < 7 || len(s) > 8 {
+		return s
+	}
+	f, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		return s
+	}
+	// The input is assumed to be in a format where 14310000 represents 14.310 MHz.
+	// This corresponds to dividing by 1,000,000.
+	return fmt.Sprintf("%.3f", f/1000000.0)
 }

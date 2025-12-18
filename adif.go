@@ -24,10 +24,10 @@ type QslSection struct {
 	QslSentVia string `adif:"qsl_sent_via,omitempty"`
 	QslVia     string `adif:"qsl_via,omitempty"`
 
-	QrzcomQsoDownloadDate   string `adif:"qrzcom_qso_download_date,omitempty"`
-	QrzcomQsoDownloadStatus string `adif:"qrzcom_qso_download_status,omitempty"`
-	QrzcomQsoUploadDate     string `adif:"qrzcom_qso_upload_date,omitempty"`
-	QrzcomQsoUploadStatus   string `adif:"qrzcom_qso_upload_status,omitempty"`
+	QrzComQsoDownloadDate   string `adif:"qrzcom_qso_download_date,omitempty"`
+	QrzComQsoDownloadStatus string `adif:"qrzcom_qso_download_status,omitempty"`
+	QrzComQsoUploadDate     string `adif:"qrzcom_qso_upload_date,omitempty"`
+	QrzComQsoUploadStatus   string `adif:"qrzcom_qso_upload_status,omitempty"`
 }
 
 type HeaderSection struct {
@@ -61,18 +61,16 @@ func QsoToRecord(q types.Qso) Record {
 	r.LoggingStation = q.LoggingStation
 	// Map QSL
 	r.QslSection = QslSection{
-		QslMsg:     q.Qsl.QslMsg,
-		QslMsgIntl: q.Qsl.QslMsgRcvd, // confirm your desired mapping here
-		QslRDate:   q.Qsl.QslRDate,
-		QslSDate:   q.Qsl.QslSDate,
-		QslRcvd:    q.Qsl.QslRcvd,
-		QslSent:    q.Qsl.QslSent,
-		QslSentVia: q.Qsl.QslSendVia,
-		QslVia:     q.Qsl.QslVia,
-		//QrzcomQsoDownloadDate:   q.Misc.QrzcomQsoDownloadDate,
-		//QrzcomQsoDownloadStatus: q.Misc.QrzcomQsoDownloadStatus,
-		//QrzcomQsoUploadDate:     q.Misc.QrzcomQsoUploadDate,
-		//QrzcomQsoUploadStatus:   q.Misc.QrzcomQsoUploadStatus,
+		QslMsg:                q.Qsl.QslMsg,
+		QslMsgIntl:            q.Qsl.QslMsgRcvd, // confirm your desired mapping here
+		QslRDate:              q.Qsl.QslRDate,
+		QslSDate:              q.Qsl.QslSDate,
+		QslRcvd:               q.Qsl.QslRcvd,
+		QslSent:               q.Qsl.QslSent,
+		QslSentVia:            q.Qsl.QslSendVia,
+		QslVia:                q.Qsl.QslVia,
+		QrzComQsoUploadDate:   q.QrzComUploadDate,
+		QrzComQsoUploadStatus: q.QrzComUploadStatus,
 	}
 	// Map user-defined fields
 	r.UserDef = UserDef{
